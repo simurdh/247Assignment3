@@ -1,7 +1,11 @@
 // compile run: gcc -g server.c -lrt -o server
-
-Analysis
-
+//
+// Analysis
+//
+// Shared Memory is the fastest method for interprocess communication because information is mapped directly to memory; there is less communication time.
+// This IPC would be helpful for debugging because it is more accurate and can provide more information than print statements (expecially in situations where gdb is less helpful, like multithreaded programs).
+// Using timers like in Assignment 2, I could update a shared memory object at regular intervals of time (like when the timer expires and a signal is sent out).
+// This would provide me with helpful data to track the program's progress and if there is a bug in the program (I could isolate at what time and where it occurs).
 
 
 #include <stdio.h>
@@ -44,8 +48,6 @@ int main(int argc, char* argv[])
 	fd = shm_open(name, O_CREAT | O_RDWR, 0666);
 	if (fd == -1) {
 		handle_error_en(fd, "shm_open");
-	} else {
-		printf("shm_open: %d\n", fd);
 	}
 
   //<Use the "ftruncate" API to set the size to the size of your structure shm.h>
@@ -58,7 +60,7 @@ int main(int argc, char* argv[])
   void *arg;
   arg = mmap(NULL, sizeof(ShmData), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
   if (arg == MAP_FAILED) {
-		handle_error_en(arg, "mmap");
+		printf("mmap: MAP_FAILED\n"); exit(EXIT_FAILURE);
 	}
   ShmData *shmPtr;
   shmPtr = (ShmData *)arg;

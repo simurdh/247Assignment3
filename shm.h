@@ -11,4 +11,5 @@ typedef struct ShmDataType {
   int data;
 } ShmData;
 
+//Declare name here so there is less chance for error
 const char* name = "/sharedMemoryObject1 ";

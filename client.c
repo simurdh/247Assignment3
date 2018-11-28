@@ -28,8 +28,8 @@ int main(int argc, char* argv[])
   void *arg;
   arg = mmap(NULL, sizeof(ShmData), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
   if (arg == MAP_FAILED) {
-		handle_error_en(arg, "mmap");
-	}
+    printf("mmap: MAP_FAILED"); exit(EXIT_FAILURE);
+  }
   ShmData *shmPtr;
   shmPtr = (ShmData *)arg;
 
